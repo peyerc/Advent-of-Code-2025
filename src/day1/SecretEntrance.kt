@@ -1,8 +1,9 @@
 package day1
 
+import java.io.File
+
 const val DIAL_SIZE = 100
-val instructions = object {}.javaClass.getResourceAsStream("/day1/sample_input.txt")!!
-    .bufferedReader()
+val instructions = File("./src/day1/sample_input.txt")
     .readLines()
     .filter { it.isNotBlank() }
     .map {
@@ -15,34 +16,39 @@ val instructions = object {}.javaClass.getResourceAsStream("/day1/sample_input.t
 fun main() {
     println("Day 1 - Secret Entrance Dial")
 
-    val staringPosition = 50
-
-    println("Dial start position: $staringPosition")
-
-    val (_, zeroCount) = instructions.fold(staringPosition to 0) { acc, instruction ->
+    val result = instructions.fold(EntranceDialAccumulator()) { acc, instruction ->
         val (direction, steps) = instruction
-        val (currentPos, zeroCounter) = acc
 
         val necessarySteps = steps % DIAL_SIZE
         val (nextPos, zeroOccurrences) = when (direction) {
-            "R" -> (currentPos + necessarySteps) % (DIAL_SIZE) to (currentPos + steps) / DIAL_SIZE
-            "L" -> (currentPos - necessarySteps).let { newPos ->
+            "R" -> (acc.currentPosition + necessarySteps) % (DIAL_SIZE) to (acc.currentPosition + steps) / DIAL_SIZE
+            "L" -> (acc.currentPosition - necessarySteps).let { newPos ->
                 if (newPos < 0) DIAL_SIZE + newPos else newPos
             } to when {
-                currentPos == 0 -> steps / DIAL_SIZE
-                steps < currentPos -> 0
-                else -> 1 + (steps - currentPos) / DIAL_SIZE
+                acc.currentPosition == 0 -> steps / DIAL_SIZE
+                steps < acc.currentPosition -> 0
+                else -> 1 + (steps - acc.currentPosition) / DIAL_SIZE
             }
             else -> error("Unknown direction")
         }
-        println("Direction: $direction, Steps: ${steps.padded}.\t${currentPos.padded} => ${nextPos.padded} (zero crossings: ${zeroOccurrences})")
-
-        nextPos to zeroCounter + zeroOccurrences
+        val posIsZero = nextPos == 0
+        println("Direction: $direction, Steps: ${steps.padded}.\t${acc.currentPosition.padded} => ${nextPos.padded} (zero reached: $posIsZero, zero crossings: $zeroOccurrences)")
+        EntranceDialAccumulator(
+            currentPosition = nextPos,
+            zeroHits = acc.zeroHits + if (posIsZero) 1 else 0,
+            zeroVisits = acc.zeroVisits + zeroOccurrences
+        )
     }
 
-    println(">>> ZERO position total hits: $zeroCount <<<")
-
+    println("Part I: Zero hits: ${result.zeroHits}")
+    println("Part II: Zero visits: ${result.zeroVisits}")
 }
 
-val Int.padded: String
+private val Int.padded: String
     get() = this.toString().padStart(3)
+
+private data class EntranceDialAccumulator(
+    val currentPosition: Int = 50,
+    val zeroHits: Int = 0,
+    val zeroVisits: Int = 0,
+)
