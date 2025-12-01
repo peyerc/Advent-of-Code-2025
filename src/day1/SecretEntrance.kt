@@ -9,7 +9,7 @@ private val instructions = File("./src/day1/sample_input.txt")
     .map {
         val direction = it.take(1)
         val steps = it.drop(1).toInt()
-        direction to steps
+        Direction.fromCode(direction) to steps
     }
 
 
@@ -21,18 +21,19 @@ fun main() {
 
         val necessarySteps = steps % DIAL_SIZE
         val (nextPos, zeroOccurrences) = when (direction) {
-            "R" -> (acc.currentPosition + necessarySteps) % (DIAL_SIZE) to (acc.currentPosition + steps) / DIAL_SIZE
-            "L" -> (acc.currentPosition - necessarySteps).let { newPos ->
+            Direction.RIGHT -> (acc.currentPosition + necessarySteps) % (DIAL_SIZE) to (acc.currentPosition + steps) / DIAL_SIZE
+            Direction.LEFT -> (acc.currentPosition - necessarySteps).let { newPos ->
                 if (newPos < 0) DIAL_SIZE + newPos else newPos
             } to when {
                 acc.currentPosition == 0 -> steps / DIAL_SIZE
                 steps < acc.currentPosition -> 0
                 else -> 1 + (steps - acc.currentPosition) / DIAL_SIZE
             }
-            else -> error("Unknown direction")
         }
         val posIsZero = nextPos == 0
+
         println("Direction: $direction, Steps: ${steps.padded}.\t${acc.currentPosition.padded} => ${nextPos.padded} (zero reached: $posIsZero, zero crossings: $zeroOccurrences)")
+
         EntranceDialAccumulator(
             currentPosition = nextPos,
             zeroHits = acc.zeroHits + if (posIsZero) 1 else 0,
@@ -52,3 +53,13 @@ private data class EntranceDialAccumulator(
     val zeroHits: Int = 0,
     val zeroVisits: Int = 0,
 )
+
+private enum class Direction(val code: String) {
+    LEFT("L"),
+    RIGHT("R");
+
+    companion object {
+        fun fromCode(code: String): Direction = runCatching { entries.first { it.code == code } }.getOrNull()
+            ?: throw IllegalArgumentException("Unknown direction code: $code")
+    }
+}
