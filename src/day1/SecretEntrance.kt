@@ -2,8 +2,8 @@ package day1
 
 import java.io.File
 
-const val DIAL_SIZE = 100
-val instructions = File("./src/day1/sample_input.txt")
+private const val DIAL_SIZE = 100
+private val instructions = File("./src/day1/sample_input.txt")
     .readLines()
     .filter { it.isNotBlank() }
     .map {
