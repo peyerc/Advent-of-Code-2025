@@ -36,7 +36,7 @@ fun main() {
 
 private fun Long.validate1(): Long {
     val stringRep = toString()
-    (1 until stringRep.length).forEach {
+    (1 .. stringRep.length/2).forEach {
         val substring = stringRep.take(it)
         val subStringTwice = substring.repeat(2)
         if (stringRep == subStringTwice) return this
@@ -46,7 +46,7 @@ private fun Long.validate1(): Long {
 
 private fun Long.validate2(): Long {
     val stringRep = toString()
-    (1 until stringRep.length).forEach { length ->
+    (1 .. stringRep.length/2).forEach { length ->
         val substring = stringRep.take(length)
         (1 .. stringRep.length).forEach {
             val multipleSubstrings = substring.repeat(it + 1)
