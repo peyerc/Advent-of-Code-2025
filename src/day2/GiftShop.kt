@@ -3,7 +3,7 @@ package day2
 import java.io.File
 import kotlin.time.measureTime
 
-private val idRanges = File("./src/day2/sample_input.txt")
+private val idRanges = File("./src/day2/full_input.txt")
     .readText()
     .replace("\n","")
     .split(",").map {

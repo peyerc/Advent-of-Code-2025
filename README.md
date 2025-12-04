@@ -5,3 +5,5 @@
 ## [Day 2: Gift Shop](src/day2/GiftShop.kt)
 
 ## [Day 3: Lobby](src/day3/Lobby.kt)
+
+## [Day 3: PrintingDepartment](src/day4/PrintingDepartment.kt)
