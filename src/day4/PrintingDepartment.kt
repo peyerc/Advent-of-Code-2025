@@ -13,8 +13,10 @@ fun main() {
 
     measureTime {
         val (map, count) = removeRolls(map)
+
         printMap(map)
         println()
+
         println("Part I: Total movable rolls are $count")
     }.also {
         println("Execution time: $it")
@@ -24,19 +26,17 @@ fun main() {
     measureTime {
         var map = map
         var currentCount: Int
-        while (true) {
+
+        do {
             val result = removeRolls(map)
             map = result.first
             currentCount = result.second
 
             printMap(map)
             println()
+        } while (currentCount != 0)
 
-            if (currentCount == 0) {
-                println("Part II: Total remaining rolls are ${day4.map.countOfRolls - map.countOfRolls}")
-                break
-            }
-        }
+        println("Part II: Total remaining rolls are ${day4.map.countOfRolls - map.countOfRolls}")
     }.also {
         println("Execution time: $it")
     }
