@@ -38,16 +38,12 @@ fun main() {
 
         val mergedRanges = mutableListOf<LongRange>()
         var currentMergedRange = sortedRanges.first()
-        sortedRanges.windowed(2).map {
-            val nextRange = it[1]
-
+        for (nextRange in sortedRanges.drop(1)) {
             if (currentMergedRange.last < nextRange.first) {
-                // No overlap, add the current merged range to the list and start a new one
                 mergedRanges.add(currentMergedRange)
                 currentMergedRange = nextRange
 
             } else {
-                // Ranges overlap or are contiguous, merge them
                 currentMergedRange = currentMergedRange.first..maxOf(currentMergedRange.last, nextRange.last)
             }
         }
