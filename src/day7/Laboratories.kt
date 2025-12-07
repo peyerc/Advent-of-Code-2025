@@ -3,7 +3,7 @@ package day7
 import java.io.File
 import kotlin.time.measureTime
 
-private val manifold = File("./src/day7/full_input.txt").readLines()
+private val manifold = File("./src/day7/sample_input.txt").readLines()
 
 fun main() {
     println("Day 7: Laboratories")
