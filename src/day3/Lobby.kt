@@ -4,7 +4,7 @@ import java.io.File
 import kotlin.text.toLong
 import kotlin.time.measureTime
 
-private val banks = File("./src/day3/full_input.txt")
+private val banks = File("./src/day3/sample_input.txt")
     .readText()
     .split("\n")
     .filter { it.isNotBlank() }

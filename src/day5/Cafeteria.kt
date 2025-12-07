@@ -3,7 +3,7 @@ package day5
 import java.io.File
 import kotlin.time.measureTime
 
-private val input = File("./src/day5/full_input.txt")
+private val input = File("./src/day5/sample_input.txt")
     .readText()
     .split("\n\n")
     .let {
