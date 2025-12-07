@@ -3,16 +3,7 @@ package day7
 import java.io.File
 import kotlin.time.measureTime
 
-private val manifold = File("./src/day7/sample_input.txt").readLines()
-private val manifoldMap = manifold
-    .mapIndexed { y, line ->
-        line.mapIndexed { x, c ->
-            Position(x, y) to c
-        }
-    }
-    .flatten()
-    .associate { (p, c) -> p to c }
-
+private val manifold = File("./src/day7/full_input.txt").readLines()
 
 fun main() {
     println("Day 7: Laboratories")
@@ -35,7 +26,7 @@ fun main() {
     
     println("Part 2")
     measureTime { 
-        println("Number of possible timelines: ${manifoldMap.findTimelines(manifoldMap.startPosition)}")
+        println("Number of possible timelines: ${manifold.findTimelines(manifold.startPosition)}")
     }.also { 
         println("Execution time: $it")
     }
@@ -80,13 +71,12 @@ private fun String.processBeamSplit(): String {
 
 private val cache = HashMap<Position, Long>()
 
-private fun Map<Position, Char>.findTimelines(currentPosition: Position): Long {
+// Solution from https://github.com/ivzb/playground/blob/master/src/main/kotlin/advent_of_code/_2025/Task07.kt
+private fun List<String>.findTimelines(currentPosition: Position): Long {
         val next = Position(currentPosition.x, currentPosition.y + 1)
-        cache[next]?.let {
-            return it
-        }
+        cache[next]?.let { return it }
 
-        return when (this[next]) {
+        return when (runCatching { this[next.y][next.x] }.getOrDefault('@')) {
             '.' -> {
                 val timelines = findTimelines(next)
                 cache[next] = timelines
@@ -106,5 +96,12 @@ data class Position(
     val y: Int,
 )
 
-private val Map<Position, Char>.startPosition: Position
-    get() = entries.first { (_, char) -> char == 'S' }.key
+private val List<String>.startPosition: Position
+    get() {
+        this.forEachIndexed { y, line ->
+            line.forEachIndexed { x, c ->
+                if (c == 'S') return Position(x,y)
+            }
+        }
+        throw IllegalStateException("No start position found")
+    }
