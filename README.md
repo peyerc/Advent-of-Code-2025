@@ -12,4 +12,4 @@
 
 ## [Day 6: Trash Compactor](src/day6/TrashCompactor.kt)
 
-## [Day 6: Laboratories](src/day7/Laboratories.kt)
+## [Day 7: Laboratories](src/day7/Laboratories.kt)
