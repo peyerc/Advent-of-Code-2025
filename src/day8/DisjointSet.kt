@@ -1,7 +1,7 @@
 package day8
 
 class DisjointSetUnion<T> {
-    // Maps to store the parent of each element and the rank (height approximation) of the set
+    // Maps to store the parent of each element
     private val parent = mutableMapOf<T, T>()
     
     val sets
