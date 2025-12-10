@@ -26,10 +26,7 @@ fun main() {
         println("Execution time: $it")
     }
 
-    val polygon = Polygon(input)
-    println(polygon)
-
-    val image = polygon.drawToImage()
+    val image = Polygon(input).drawToImage()
     ImageIO.write(image, "png", File("day9_interesting_pattern.png"))
 
     // https://todd.ginsberg.com/post/advent-of-code/2025/day9/
@@ -43,6 +40,8 @@ fun main() {
         val lines: List<Rect> = (input + input.first())
             .zipWithNext()
             .map { (left, right) -> Rect.of(left, right) }
+        
+        println("Lines: $lines")
 
         val result = rects.first { rectangle ->
             val inner = rectangle.inner()
