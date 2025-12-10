@@ -15,3 +15,5 @@
 ## [Day 7: Laboratories](src/day7/Laboratories.kt)
 
 ## [Day 8: Playground](src/day8/Playground.kt)
+
+## [Day : Movie Theater](src/day9/MovieTheater.kt)

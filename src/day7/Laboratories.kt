@@ -91,7 +91,7 @@ private fun List<String>.findTimelines(currentPosition: Position): Long {
         }
     }
 
-data class Position(
+private data class Position(
     val x: Int,
     val y: Int,
 )
