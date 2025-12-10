@@ -4,7 +4,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 // (c) todd.ginsberg
-class Rect(val x: IntRange, val y: IntRange) {
+internal class Rect(val x: IntRange, val y: IntRange) {
 
     val area: Long =
         x.size().toLong() * y.size()
