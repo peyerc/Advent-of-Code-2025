@@ -16,6 +16,8 @@
 
 ## [Day 8: Playground](src/day8/Playground.kt)
 
-## [Day : Movie Theater](src/day9/MovieTheater.kt)
+## [Day 9: Movie Theater](src/day9/MovieTheater.kt)
 
-## [Day : Factory](src/day10/Factory.kt)
+## [Day 10: Factory](src/day10/Factory.kt)
+
+## [Day 11: Reactor](src/day11/Reactor.kt)
